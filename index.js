@@ -7,9 +7,7 @@ const pino = require("pino")
 const pinoHttp = require("pino-http")
 const mongoose = require("mongoose")
 const cookieParser = require("cookie-parser")
-const helmet = require("helmet")
 const cors = require("cors")
-const compression = require("compression")
 
 if (process.env.NODE_ENV === "development") {
   require("dotenv").config()
@@ -64,13 +62,11 @@ app.set("view engine", "html")
 
 // Common middleware
 // app.use(/* ... */)
+app.use(cors())
 app.use(pinoHttp({ logger }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(helmet())
-app.use(cors())
-app.use(compression())
 
 // Register routes
 // @NOTE: require here because this ensures that even syntax errors
