@@ -5,7 +5,7 @@
   "author": "Nguyen Ngoc Duc <55783340+nnduc2207@users.noreply.github.com>",
   "keywords": [],
   "license": "ISC",
-  "main": "index.js",
+  "main": "bin/app",
   "repository": {
     "type": "git",
     "url": "https://github.com/nnduc2207/ClassManagement-server.git"
@@ -33,5 +33,8 @@
   "devDependencies": {
     "dotenv": "^10.0.0",
     "nodemon": "^2.0.14"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
