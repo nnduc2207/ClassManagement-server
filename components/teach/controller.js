@@ -1,6 +1,6 @@
-import Teach from "./model";
+const Teach = require("./model")
 
-export async function getTeach({ teacherId, classId }) {
+async function getTeach({ teacherId, classId }) {
     try {
         const teach = await Teach.findOne({ teacherId, classId })
 
@@ -10,7 +10,7 @@ export async function getTeach({ teacherId, classId }) {
     }
 }
 
-export async function getTeachesByUser(teacherId) {
+async function getTeachesByUser(teacherId) {
     try {
         const teaches = await Teach.find({ teacherId })
 
@@ -20,7 +20,7 @@ export async function getTeachesByUser(teacherId) {
     }
 }
 
-export async function getTeachesByClass(classId) {
+async function getTeachesByClass(classId) {
     try {
         const teaches = await Teach.find({ classId })
 
@@ -30,8 +30,13 @@ export async function getTeachesByClass(classId) {
     }
 }
 
-export async function createTeach({ teacherId, classId }) {
+async function createTeach({ teacherId, classId }) {
     try {
+        const existTeach = await Teach.findOne({ teacherId, classId })
+        if (existTeach) {
+            throw 'You already in this class!'
+        }
+
         const teach = await Teach.create({ teacherId, classId })
 
         return teach
@@ -40,11 +45,19 @@ export async function createTeach({ teacherId, classId }) {
     }
 }
 
-export async function deleteTeach({ teacherId, classId }) {
+async function deleteTeach({ teacherId, classId }) {
     try {
         await Teach.findOneAndRemove({ teacherId, classId })
         return true
     } catch (error) {
         throw error
     }
+}
+
+module.exports = {
+    getTeach,
+    getTeachesByClass,
+    getTeachesByUser,
+    createTeach,
+    deleteTeach,
 }

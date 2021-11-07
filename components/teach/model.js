@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose"
-import Class from "../class/model";
-import User from "../user/model";
+const { Schema, model } = require("mongoose")
+const Class = require("../class/model")
+const User = require("../user/model")
 
 const TeachSchema = new Schema(
     {
@@ -39,4 +39,4 @@ const TeachSchema = new Schema(
 
 const Teach = model("Teach", TeachSchema)
 
-export default Teach
+module.exports = Teach

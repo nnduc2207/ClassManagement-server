@@ -1,10 +1,10 @@
-import Class from "./model"
-import { getStudiesByClass } from "../study/controller"
-import { getTeachesByClass } from "../teach/controller"
-import User from "../user/model"
-import crypto from "crypto"
+const Class = require("./model")
+const { getStudiesByClass } = require("../study/controller")
+const { getTeachesByClass } = require("../teach/controller")
+const User = require("../user/model")
+const crypto = require("crypto")
 
-export async function getClasses() {
+async function getClasses() {
     try {
         const classes = await Class.find({})
         return classes
@@ -13,7 +13,7 @@ export async function getClasses() {
     }
 }
 
-export async function getClass(id) {
+async function getClass(id) {
     try {
         const _class = await Class.findById(id)
         return _class
@@ -23,7 +23,7 @@ export async function getClass(id) {
     }
 }
 
-export async function createClass({ id, name }) {
+async function createClass({ id, name }) {
     try {
         const token = crypto.randomUUID()
         const newClass = await Class.create({ id, name, invitedToken: token })
@@ -35,7 +35,7 @@ export async function createClass({ id, name }) {
     }
 }
 
-export async function deleteClass(id) {
+async function deleteClass(id) {
     try {
         const studies = await getStudiesByClass(id)
         if (studies.length != 0) {
@@ -60,7 +60,7 @@ export async function deleteClass(id) {
     }
 }
 
-export async function getStudents(id) {
+async function getStudents(id) {
     try {
         const studies = await getStudiesByClass(id)
         let students = await studies.map(
@@ -73,7 +73,7 @@ export async function getStudents(id) {
     }
 }
 
-export async function getTeachers(id) {
+async function getTeachers(id) {
     try {
         const teaches = await getTeachesByClass(id)
         let teachers = await teaches.map(
@@ -84,4 +84,24 @@ export async function getTeachers(id) {
     } catch (error) {
         throw error
     }
+}
+
+async function getInvitedToken(id) {
+    try {
+        const _class = await Class.findById(id)
+        return _class.invitedToken
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+
+module.exports = {
+    getClasses,
+    getClass,
+    createClass,
+    deleteClass,
+    getStudents,
+    getTeachers,
+    getInvitedToken,
 }

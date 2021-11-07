@@ -1,6 +1,6 @@
-import Study from "./model";
+const Study = require("./model")
 
-export async function getStudy({ studentId, classId }) {
+async function getStudy({ studentId, classId }) {
     try {
         const study = await Study.findOne({ studentId, classId })
 
@@ -10,7 +10,7 @@ export async function getStudy({ studentId, classId }) {
     }
 }
 
-export async function getStudiesByUser(studentId) {
+async function getStudiesByUser(studentId) {
     try {
         const studies = await Study.find({ studentId })
 
@@ -20,7 +20,7 @@ export async function getStudiesByUser(studentId) {
     }
 }
 
-export async function getStudiesByClass(classId) {
+async function getStudiesByClass(classId) {
     try {
         const studies = await Study.find({ classId })
 
@@ -30,8 +30,13 @@ export async function getStudiesByClass(classId) {
     }
 }
 
-export async function createStudy({ studentId, classId }) {
+async function createStudy({ studentId, classId }) {
     try {
+        const existStudy = await Study.findOne({ studentId, classId })
+        if (existStudy) {
+            throw 'You already in this class!'
+        }
+        
         const study = await Study.create({ studentId, classId })
 
         return study
@@ -40,11 +45,19 @@ export async function createStudy({ studentId, classId }) {
     }
 }
 
-export async function deleteStudy({ studentId, classId }) {
+async function deleteStudy({ studentId, classId }) {
     try {
         await Study.findOneAndRemove({ studentId, classId })
         return true
     } catch (error) {
         throw error
     }
+}
+
+module.exports = {
+    getStudy,
+    getStudiesByClass,
+    getStudiesByUser,
+    createStudy,
+    deleteStudy,
 }

@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose"
+const { Schema, model } = require("mongoose")
 
 const UserSchema = new Schema(
     {
@@ -51,4 +51,4 @@ UserSchema.statics.findByIdAndUpdate = async function(id, update, options, callb
 
 const User = model("User", UserSchema)
 
-export default User
+module.exports = User

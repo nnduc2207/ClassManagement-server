@@ -1,12 +1,12 @@
-import * as bcrypt from "bcrypt"
-import { default as jwt } from "jsonwebtoken"
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
-import User from "./model"
-import { createStudy, deleteStudy, getStudiesByUser } from "../study/controller"
-import { createTeach, deleteTeach, getTeachesByUser } from "../teach/controller"
-import Class from "../class/model"
+const User = require("./model")
+const { createStudy, deleteStudy, getStudiesByUser } = require("../study/controller")
+const { createTeach, deleteTeach, getTeachesByUser } = require("../teach/controller")
+const Class = require("../class/model")
 
-export async function getUsers(isStudent = true) {
+async function getUsers(isStudent = true) {
     try {
         const user = await User.find({ isStudent })
         return user
@@ -15,7 +15,7 @@ export async function getUsers(isStudent = true) {
     }
 }
 
-export async function getUser(id) {
+async function getUser(id) {
     try {
         const user = await User.findById(id)
         return user
@@ -24,7 +24,7 @@ export async function getUser(id) {
     }
 }
 
-export async function createUser({ id, name, email, password, isStudent }) {
+async function createUser({ id, name, email, password, isStudent }) {
     try {
         if (!(id && name && email && password && isStudent != undefined)) {
             throw "Missing data"
@@ -53,7 +53,7 @@ export async function createUser({ id, name, email, password, isStudent }) {
     }
 }
 
-export async function updateUser({ id, name, email }) {
+async function updateUser({ id, name, email }) {
     try {
         const user = await User.findById(id)
         if (!user) {
@@ -76,7 +76,7 @@ export async function updateUser({ id, name, email }) {
     }
 }
 
-export async function deleteUser(id) {
+async function deleteUser(id) {
     try {
         const user = await User.findById(id)
 
@@ -104,7 +104,7 @@ export async function deleteUser(id) {
     }
 }
 
-export async function getMyClasses(id) {
+async function getMyClasses(id) {
     try {
         const user = await User.findById(id)
 
@@ -120,7 +120,7 @@ export async function getMyClasses(id) {
     }
 }
 
-export async function addClass({
+async function addClass({
     studentId = undefined,
     teacherId = undefined,
     classId,
@@ -137,7 +137,7 @@ export async function addClass({
     }
 }
 
-export async function joinClass({ userId, invitedToken }) {
+async function joinClass({ userId, invitedToken }) {
     try {
         const user = await User.findById(userId)
         if (!user) {
@@ -162,7 +162,7 @@ export async function joinClass({ userId, invitedToken }) {
     }
 }
 
-export async function deleteClass({
+async function deleteClass({
     studentId = undefined,
     teacherId = undefined,
     classId,
@@ -179,7 +179,7 @@ export async function deleteClass({
     }
 }
 
-export async function login({ email, password }) {
+async function login({ email, password }) {
     try {
         const user = await User.findOne({ email })
         if (!user) {
@@ -203,7 +203,7 @@ export async function login({ email, password }) {
     }
 }
 
-export async function authenticateToken(token) {
+async function authenticateToken(token) {
     try {
         let user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
 
@@ -216,4 +216,19 @@ export async function authenticateToken(token) {
     } catch (error) {
         throw error
     }
+}
+
+
+module.exports = {
+    getUser,
+    getUsers,
+    createUser,
+    updateUser,
+    deleteUser,
+    getMyClasses,
+    addClass,
+    joinClass,
+    deleteClass,
+    login,
+    authenticateToken,
 }

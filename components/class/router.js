@@ -1,5 +1,13 @@
-import express from "express"
-import { createClass, deleteClass, getClass, getClasses, getStudents, getTeachers } from "./controller"
+const express = require("express")
+const {
+    createClass,
+    deleteClass,
+    getClass,
+    getClasses,
+    getStudents,
+    getTeachers,
+    getInvitedToken,
+} = require("./controller")
 
 const router = express.Router()
 
@@ -63,5 +71,14 @@ router.get("/:id/getteachers", async function (req, res) {
     }
 })
 
+router.get("/:id/invitedtoken", async function (req, res) {
+    try {
+        const { id } = req.params
+        const token = await getInvitedToken(id)
+        return res.json(token)
+    } catch (error) {
+        return res.status(404).json(error)
+    }
+})
 
-export default router
+module.exports = router

@@ -1,5 +1,5 @@
-import express from "express"
-import {
+const express = require("express")
+const {
     addClass,
     createUser,
     deleteClass,
@@ -9,8 +9,8 @@ import {
     updateUser,
     authenticateToken,
     joinClass,
-} from "./controller"
-import User from "./model"
+} = require("./controller")
+const User = require("./model")
 
 const router = express.Router()
 
@@ -161,4 +161,4 @@ router.get("/:id/getclasses", async (req, res) => {
     }
 })
 
-export default router
+module.exports = router

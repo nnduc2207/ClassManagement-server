@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose"
+const { Schema, model } = require("mongoose")
 
 const ClassSchema = new Schema(
     {
@@ -42,4 +42,4 @@ ClassSchema.statics.findByIdAndUpdate = async function(id, update, options, call
 
 const Class = model("Class", ClassSchema)
 
-export default Class
+module.exports = Class
