@@ -11,7 +11,9 @@ const helmet = require("helmet")
 const cors = require("cors")
 const compression = require("compression")
 
-require("dotenv").config()
+if (process.env.NODE_ENV === "development") {
+  require("dotenv").config()
+}
 // Set default options
 const ready = function () {}
 
