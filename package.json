@@ -5,15 +5,15 @@
   "author": "Nguyen Ngoc Duc <55783340+nnduc2207@users.noreply.github.com>",
   "keywords": [],
   "license": "ISC",
-  "main": "bin/app",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/nnduc2207/ClassManagement-server.git"
   },
   "scripts": {
-    "start": "node bin/app",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon bin/app"
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
